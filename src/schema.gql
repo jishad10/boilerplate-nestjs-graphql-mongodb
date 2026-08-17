@@ -1,0 +1,242 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input AddressInput {
+  cityState: String
+  country: String
+  postalCode: String
+  roadArea: String
+  taxId: String
+}
+
+type AddressType {
+  cityState: String
+  country: String
+  postalCode: String
+  roadArea: String
+  taxId: String
+}
+
+input AdminUpdateUserInput {
+  address: AddressInput
+  bio: String
+  dob: String
+  gender: String
+  hasActiveSubscription: Boolean
+  isVerified: Boolean
+  language: String
+  name: String
+  phone: String
+  role: String
+  username: String
+}
+
+type AuthResponse {
+  accessToken: String
+  message: String!
+  user: UserPayload
+}
+
+input ChangePasswordInput {
+  newPassword: String!
+  oldPassword: String!
+}
+
+input ForgetPasswordInput {
+  email: String!
+}
+
+type HealthResponse {
+  status: String!
+  timestamp: String!
+  uptime: Float!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type MessageResponse {
+  message: String!
+}
+
+type Mutation {
+  """Admin: delete any user by ID"""
+  adminDeleteUser(id: ID!): MessageResponse!
+
+  """Admin: update any user by ID"""
+  adminUpdateUser(id: ID!, input: AdminUpdateUserInput!): UserResponse!
+
+  """Change password for authenticated user"""
+  changePassword(input: ChangePasswordInput!): MessageResponse!
+
+  """Delete authenticated user account"""
+  deleteAccount: MessageResponse!
+
+  """Delete profile avatar"""
+  deleteAvatar: UserResponse!
+
+  """Delete all profile avatars"""
+  deleteMultipleAvatars: UserResponse!
+
+  """Delete user PDF document"""
+  deletePDF: UserResponse!
+
+  """Send OTP to email for password reset"""
+  forgetPassword(input: ForgetPasswordInput!): MessageResponse!
+
+  """Login and receive tokens"""
+  login(input: LoginInput!): AuthResponse!
+
+  """Logout and invalidate refresh token"""
+  logout: MessageResponse!
+
+  """Exchange refresh token for new access token"""
+  refreshAccessToken(input: RefreshTokenInput!): TokenResponse!
+
+  """Register a new user account"""
+  register(input: RegisterInput!): AuthResponse!
+
+  """Reset password after OTP verification"""
+  resetPassword(input: ResetPasswordInput!): MessageResponse!
+
+  """Replace profile avatar"""
+  updateAvatar(file: Upload!): UserResponse!
+
+  """Replace all profile avatars (max 5)"""
+  updateMultipleAvatars(files: [Upload!]!): UserResponse!
+
+  """Replace user PDF document"""
+  updatePDF(file: Upload!): UserResponse!
+
+  """Update authenticated user profile"""
+  updateProfile(input: UpdateUserInput!): UserResponse!
+
+  """Upload profile avatar"""
+  uploadAvatar(file: Upload!): UserResponse!
+
+  """Upload multiple profile avatars (max 5)"""
+  uploadMultipleAvatars(files: [Upload!]!): UserResponse!
+
+  """Upload user PDF document"""
+  uploadPDF(file: Upload!): UserResponse!
+
+  """Verify the OTP code sent to email"""
+  verifyCode(input: VerifyCodeInput!): MessageResponse!
+}
+
+type PaginationInfo {
+  currentPage: Int!
+  hasNextPage: Boolean!
+  hasPrevPage: Boolean!
+  totalPages: Int!
+}
+
+type PaginationMeta {
+  limit: Int!
+  page: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type Query {
+  """Admin: get any user by ID"""
+  adminGetUser(id: ID!): UserResponse!
+
+  """Admin: list all admins with pagination"""
+  getAllAdmins(date: String, limit: Int = 10, page: Int = 1, search: String): UserListResponse!
+
+  """Admin: list all users with pagination"""
+  getAllUsers(date: String, limit: Int = 10, page: Int = 1, search: String): UserListResponse!
+
+  """Server health check"""
+  health: HealthResponse!
+
+  """Get authenticated user profile"""
+  me: UserResponse!
+}
+
+input RefreshTokenInput {
+  refreshToken: String!
+}
+
+input RegisterInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+input ResetPasswordInput {
+  email: String!
+  newPassword: String!
+}
+
+type TokenResponse {
+  accessToken: String!
+  message: String!
+  refreshToken: String!
+}
+
+input UpdateUserInput {
+  address: AddressInput
+  bio: String
+  dob: String
+  gender: String
+  language: String
+  name: String
+  phone: String
+  username: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type UserListResponse {
+  message: String!
+  meta: PaginationMeta!
+  paginationInfo: PaginationInfo!
+  users: [UserType!]!
+}
+
+type UserPayload {
+  _id: ID!
+  email: String!
+  name: String!
+  profileImage: String
+  refreshToken: String
+  role: String!
+}
+
+type UserResponse {
+  data: UserType!
+  message: String!
+}
+
+type UserType {
+  _id: ID!
+  address: AddressType
+  bio: String
+  createdAt: String
+  dob: String
+  email: String!
+  gender: String
+  hasActiveSubscription: Boolean
+  isVerified: Boolean
+  language: String
+  multiProfileImage: [String!]
+  name: String!
+  pdfFile: String
+  phone: String
+  profileImage: String
+  role: String!
+  stripeAccountId: String
+  updatedAt: String
+  username: String
+}
+
+input VerifyCodeInput {
+  email: String!
+  otp: String!
+}
